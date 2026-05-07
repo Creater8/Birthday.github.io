@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Magical Birthday Quest</title>
+
+<script src="https://cdn.tailwindcss.com"></script>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+<style>
+body {
+  font-family: 'Poppins', sans-serif;
+  overflow-x: hidden;
+}
+
+/* MAIN CARD */
+.glass {
+  background: rgba(255,255,255,0.15);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255,255,255,0.2);
+}
+
+.fade { animation: fadeIn 1s ease; }
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.floating {
+  animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%,100% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+}
+
+/* CONFETTI */
+.confetti {
+  position: fixed;
+  width: 10px;
+  height: 10px;
+  top: -10px;
+  animation: fall linear forwards;
+  z-index: 9999;
+}
+
+@keyframes fall {
+  to { transform: translateY(110vh) rotate(720deg); }
+}
+
+/* MAGIC SCREEN */
+.magic-bg {
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(circle at center, #2b1055, #000);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+  overflow: hidden;
+}
+
+/* glow text */
+.glow {
+  text-shadow:
+    0 0 10px #fff,
+    0 0 20px #ff00ff,
+    0 0 40px #ff00ff;
+}
+
+/* reveal animation */
+.reveal {
+  animation: pop 2s ease forwards;
+}
+
+@keyframes pop {
+  0% { transform: scale(0.2); opacity: 0; }
+  60% { transform: scale(1.1); opacity: 1; }
+  100% { transform: scale(1); }
+}
+
+/* floating stars */
+.star {
+  position: absolute;
+  font-size: 20px;
+  animation: floatStar 6s linear infinite;
+}
+
+@keyframes floatStar {
+  0% { transform: translateY(100vh); opacity: 0; }
+  30% { opacity: 1; }
+  100% { transform: translateY(-120vh) rotate(360deg); opacity: 0; }
+}
+
+</style>
+</head>
+
+<body class="bg-gradient-to-br from-purple-900 via-indigo-800 to-pink-700 min-h-screen flex items-center justify-center text-white p-5">
+
+<!-- GAME BOX -->
+<div class="glass rounded-3xl p-8 w-full max-w-2xl text-center fade">
+
+<h1 id="title" class="text-4xl md:text-5xl font-bold mb-6 floating">
+Mystery Quest ✨
+</h1>
+
+<div id="content" class="text-lg md:text-xl">
+A magical mission awaits you...
+</div>
+
+<button id="btn"
+class="mt-8 bg-white text-purple-800 px-8 py-3 rounded-full font-bold hover:scale-105 transition">
+Start 🚀
+</button>
+
+</div>
+
+<!-- MAGIC SCREEN -->
+<div id="magicBox" class="magic-bg">
+
+<div id="stars"></div>
+
+<div class="text-center reveal px-6">
+
+  <div class="text-7xl mb-6">🪄✨</div>
+
+  <h1 class="text-6xl md:text-8xl font-extrabold text-yellow-300 glow">
+    HAPPY
+  </h1>
+
+  <h1 class="text-6xl md:text-8xl font-extrabold text-pink-300 mt-4 glow">
+    BIRTHDAY
+  </h1>
+
+  <h2 class="text-4xl md:text-6xl mt-6 font-bold">
+    MAUSI ❤️
+  </h2>
+
+  <!-- FINAL WISH -->
+  <div class="mt-10 max-w-2xl mx-auto text-white text-lg md:text-2xl leading-relaxed">
+
+    ✨ Dear Mausi ✨  
+    <br><br>
+
+    On your special day, I just want to say  
+    <span class="text-pink-300 font-semibold">thank you for all the love, care, and warmth</span>  
+    you always give to everyone ❤️  
+
+    <br><br>
+
+    May your life always be filled with  
+    <span class="text-yellow-300 font-semibold">happiness, health, peace, and success</span> 🌟  
+
+    <br><br>
+
+    You are truly special and deeply loved 💖  
+    <br><br>
+
+    <span class="text-2xl font-bold text-pink-200">
+      Wishing you the most magical birthday ever! 🎂🎉
+    </span>
+
+  </div>
+
+  <div class="mt-10 text-5xl">🎂 🎁 🌟 🎈</div>
+
+</div>
+
+</div>
+
+<script>
+
+const title = document.getElementById("title");
+const content = document.getElementById("content");
+const btn = document.getElementById("btn");
+const magicBox = document.getElementById("magicBox");
+const stars = document.getElementById("stars");
+
+let step = 0;
+
+btn.onclick = () => {
+step++;
+
+// CH1
+if(step === 1){
+title.innerHTML = "Challenge 1 🧩";
+content.innerHTML = `
+Guess:
+<div class="bg-black/30 p-4 mt-3 rounded-xl text-2xl">H _ P P Y</div>
+Hint: celebration word 🎉
+<br><br>
+<input id="a1" class="p-3 text-black rounded-xl w-full text-center">
+`;
+btn.innerHTML = "Submit";
+}
+
+// CHECK 1
+else if(step === 2){
+if(document.getElementById("a1").value.toLowerCase() !== "happy"){
+alert("Try again 😄");
+step--;
+return;
+}
+
+// CH2 EASY
+title.innerHTML = "Challenge 2 🎯";
+content.innerHTML = `
+Fill:
+<div class="bg-white/20 p-4 mt-3 rounded-xl text-2xl">
+Happy ______ 🎂
+</div>
+Hint: special day 😉
+<br><br>
+<input id="a2" class="p-3 text-black rounded-xl w-full text-center">
+`;
+btn.innerHTML = "Reveal";
+}
+
+// FINAL
+else if(step === 3){
+if(document.getElementById("a2").value.toLowerCase() !== "birthday"){
+alert("Almost 😄");
+step--;
+return;
+}
+
+document.querySelector(".glass").style.display = "none";
+magicBox.style.display = "flex";
+
+// stars
+for(let i=0;i<80;i++){
+const s = document.createElement("div");
+s.classList.add("star");
+s.innerHTML = ["✨","⭐","🌟","💫"][Math.floor(Math.random()*4)];
+s.style.left = Math.random()*100 + "vw";
+s.style.fontSize = (Math.random()*20+10)+"px";
+s.style.animationDuration = (Math.random()*5+3)+"s";
+stars.appendChild(s);
+}
+
+launchConfetti();
+}
+};
+
+// CONFETTI
+function launchConfetti(){
+for(let i=0;i<150;i++){
+const c = document.createElement("div");
+c.classList.add("confetti");
+c.style.left = Math.random()*100 + "vw";
+c.style.background = `hsl(${Math.random()*360},100%,50%)`;
+c.style.width = c.style.height = Math.random()*10+5+"px";
+c.style.animationDuration = Math.random()*3+2+"s";
+document.body.appendChild(c);
+setTimeout(()=>c.remove(),5000);
+}
+}
+
+</script>
+
+</body>
+</html>
